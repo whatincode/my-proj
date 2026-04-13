@@ -1,0 +1,271 @@
+<?php include 'db.php'; ?>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .pwd-wrap { position: relative; margin-bottom: 1rem; }
+    .pwd-wrap input { padding-right: 40px; }
+    .eye-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+  <div class="card p-4" style="max-width:400px; margin:auto;">
+    <h3>Register</h3>
+    <form method="POST">
+      <input type="text" name="username" class="form-control mb-3" placeholder="Username" required>
+
+      <input type="email" name="email" class="form-control mb-3" placeholder="Email Address" required>
+
+      <!-- Task 3: Show/Hide Password -->
+      <div class="pwd-wrap">
+        <input type="password" name="password" id="pwd1" class="form-control" placeholder="Password" required>
+        <button type="button" class="eye-toggle" onclick="togglePwd('pwd1','eye1')" id="eye1">👁</button>
+      </div>
+
+      <!-- Task 1: Confirm Password -->
+      <div class="pwd-wrap">
+        <input type="password" name="confirm_password" id="pwd2" class="form-control" placeholder="Confirm Password" required>
+        <button type="button" class="eye-toggle" onclick="togglePwd('pwd2','eye2')" id="eye2">👁</button>
+      </div>
+
+      <button class="btn btn-success w-100">Register</button>
+    </form>
+    <div class="text-center mt-3">
+      <a href="index.php">Already have an account? Login</a>
+    </div>
+  </div>
+</div>
+
+<script>
+function togglePwd(fieldId, eyeId) {
+    const f = document.getElementById(fieldId);
+    const e = document.getElementById(eyeId);
+    if (f.type === 'password') {
+        f.type = 'text';
+        e.textContent = '🙈';
+    } else {
+        f.type = 'password';
+        e.textContent = '👁';
+    }
+}
+</script>
+</body>
+</html>
+
+<?php
+if (isset($_POST['username'])) {
+    $username = $_POST['username'];
+    $email    = $_POST['email'];
+    $password = $_POST['password'];
+    $confirm  = $_POST['confirm_password'];
+
+    // Task 1: Check passwords match
+    if ($password !== $confirm) {
+        echo "<script>alert('Passwords do not match!'); window.history.back();</script>";
+    } else {
+        $hashed = password_hash($password, PASSWORD_DEFAULT);
+        $stmt   = $conn->prepare("INSERT INTO users(username, email, password) VALUES(?, ?, ?)");
+        $stmt->bind_param("sss", $username, $email, $hashed);
+        $stmt->execute();
+        echo "<script>alert('User Registered Successfully!'); window.location='index.php';</script>";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #6366f1, #3b82f6);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .login-card {
+      width: 370px;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    .pwd-wrap { position: relative; margin-bottom: 1rem; }
+    .pwd-wrap input { padding-right: 40px; }
+    .eye-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+<div class="login-card">
+  <h3 class="text-center mb-4">Login</h3>
+
+  <?php
+  // Task 2: Session timeout message
+  if (isset($_GET['timeout'])) {
+      echo '<div class="alert alert-warning">Session expired due to inactivity. Please login again.</div>';
+  }
+
+  // Task 4: Specific error messages
+  $errors = [
+      'user_not_found'  => 'User not found. Please register first.',
+      'wrong_password'  => 'Incorrect password. Please try again.',
+  ];
+  if (isset($_GET['error']) && array_key_exists($_GET['error'], $errors)) {
+      echo '<div class="alert alert-danger">' . $errors[$_GET['error']] . '</div>';
+  }
+
+  // Task 7: Remember Me - pre-fill username from cookie
+  $saved_user = isset($_COOKIE['remember_user']) ? htmlspecialchars($_COOKIE['remember_user']) : '';
+  ?>
+
+  <form action="login.php" method="POST">
+    <input type="text" name="username" class="form-control mb-3"
+           placeholder="Username" value="<?php echo $saved_user; ?>" required>
+
+    <!-- Task 3: Show/Hide Password -->
+    <div class="pwd-wrap">
+      <input type="password" name="password" id="loginPwd"
+             class="form-control" placeholder="Password" required>
+      <button type="button" class="eye-toggle" onclick="togglePwd('loginPwd','eye1')" id="eye1">👁</button>
+    </div>
+
+    <!-- Task 7: Remember Me -->
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="checkbox" name="remember" id="remember" value="1"
+             <?php echo $saved_user ? 'checked' : ''; ?>>
+      <label class="form-check-label" for="remember">Remember Me (30 days)</label>
+    </div>
+
+    <button class="btn btn-primary w-100">Login</button>
+  </form>
+
+  <div class="text-center mt-3">
+    <a href="register.php">Don't have an account? Register</a>
+  </div>
+</div>
+
+<script>
+function togglePwd(fieldId, eyeId) {
+    const f = document.getElementById(fieldId);
+    const e = document.getElementById(eyeId);
+    if (f.type === 'password') {
+        f.type = 'text';
+        e.textContent = '🙈';
+    } else {
+        f.type = 'password';
+        e.textContent = '👁';
+    }
+}
+</script>
+</body>
+</html>
+
+<?php
+session_start();
+include 'db.php';
+
+if (!isset($_SESSION['user'])) {
+    header("Location: index.php");
+    exit;
+}
+
+// Task 2: Session timeout after 5 minutes
+$timeout = 300;
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $timeout) {
+    session_unset();
+    session_destroy();
+    header("Location: index.php?timeout=1");
+    exit;
+}
+$_SESSION['last_activity'] = time();
+
+// Task 6: Fetch full user profile
+$stmt = $conn->prepare("SELECT id, username, email FROM users WHERE username=?");
+$stmt->bind_param("s", $_SESSION['user']);
+$stmt->execute();
+$user = $stmt->get_result()->fetch_assoc();
+?>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5" style="max-width:480px;">
+  <div class="card p-4 text-center">
+    <h2 class="mb-3">Welcome, <?php echo htmlspecialchars($user['username']); ?>!</h2>
+    <hr>
+
+    <!-- Task 6: User Profile Section -->
+    <h5 class="mb-3">👤 User Profile</h5>
+    <table class="table table-bordered text-start">
+      <tr><th>User ID</th><td><?php echo $user['id']; ?></td></tr>
+      <tr><th>Username</th><td><?php echo htmlspecialchars($user['username']); ?></td></tr>
+      <tr><th>Email</th><td><?php echo htmlspecialchars($user['email']); ?></td></tr>
+    </table>
+
+    <!-- Task 5: Logout Confirmation -->
+    <button class="btn btn-danger mt-3 w-100" onclick="confirmLogout()">Logout</button>
+  </div>
+</div>
+
+<script>
+// Task 5: Logout confirmation dialog
+function confirmLogout() {
+    if (confirm("Are you sure you want to logout?")) {
+        window.location.href = "logout.php";
+    }
+}
+</script>
+</body>
+</html>
+
+<?php
+$conn = new mysqli("localhost", "root", "", "login_db");
+
+if ($conn->connect_error) {
+    die("Connection Failed: " . $conn->connect_error);
+}
+?>
+
+-- Run this in phpMyAdmin before starting Experiment 8
+CREATE DATABASE IF NOT EXISTS login_db;
+USE login_db;
+
+CREATE TABLE IF NOT EXISTS users (
+    id       INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    email    VARCHAR(150),
+    password VARCHAR(255) NOT NULL
+);
+
+<?php
+session_start();
+session_unset();
+session_destroy();
+header("Location: index.php");
+?>
