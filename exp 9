@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+  <h1>{{ name }}'s Profile 🌟</h1>
+  <div class="profile-card">
+    <p>💡 <b>Skill:</b>    {{ skill }}</p>
+    <p>🎯 <b>Hobby:</b>    {{ hobby }}</p>
+    <p>🚀 <b>Goal:</b>     {{ goal }}</p>
+    <p>💻 <b>Language:</b> {{ language }}</p>
+    <p>💪 <b>Strength:</b> {{ strength }}</p>
+  </div>
+  <br>
+  <a href="/">Create Another</a> &nbsp;|&nbsp; <a href="/view">View All</a>
+</div>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>About Me</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+<div class="container">
+  <h1>About Me Questionnaire ✨</h1>
+
+  <form name="myForm" action="/submit" method="POST" onsubmit="return validateForm()">
+    <input type="text"   name="name"     placeholder="Your Name"           required>
+    <input type="text"   name="skill"    placeholder="Your Favourite Skill" required>
+    <input type="text"   name="hobby"    placeholder="Your Hobby"           required>
+    <input type="text"   name="goal"     placeholder="Your Goal in Life"    required>
+    <input type="text"   name="language" placeholder="Favourite Language"   required>
+    <input type="text"   name="strength" placeholder="Your Strength"        required>
+    <button type="submit">Generate Profile</button>
+  </form>
+
+  <br>
+  <a href="/view">View All Profiles</a>
+</div>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>All Profiles</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h1 style="text-align:center; color:white;">All Profiles 🌟</h1>
+
+<div style="text-align:center; color:white; margin-bottom:15px;">
+  <b>Total Profiles: {{ total }}</b>
+</div>
+
+<!-- Search -->
+<div style="text-align:center; margin-bottom:20px;">
+  <form action="/search" method="GET" style="display:inline-flex; gap:8px;">
+    <input type="text" name="q" placeholder="Search by name..." style="padding:8px; border-radius:5px; border:none;">
+    <button type="submit" style="padding:8px 16px; background:#2563eb; color:white; border:none; border-radius:5px; cursor:pointer;">Search</button>
+  </form>
+</div>
+
+<div class="cards-container">
+  {% for row in data %}
+  <div class="card">
+    <div class="avatar">{{ row[1][0] | upper }}</div>
+    <h2>{{ row[1] }}</h2>
+    <p>💡 <b>Skill:</b>    {{ row[2] }}</p>
+    <p>🎯 <b>Hobby:</b>    {{ row[3] }}</p>
+    <p>🚀 <b>Goal:</b>     {{ row[4] }}</p>
+    <p>💻 <b>Language:</b> {{ row[5] }}</p>
+    <p>💪 <b>Strength:</b> {{ row[6] }}</p>
+    <a href="/delete/{{ row[0] }}"
+       onclick="return confirm('Delete this profile?')"
+       style="display:inline-block; margin-top:8px; padding:5px 14px;
+              background:#dc2626; color:white; border-radius:5px; text-decoration:none; font-size:13px;">
+      Delete
+    </a>
+  </div>
+  {% else %}
+  <p style="color:white; text-align:center;">No profiles found.</p>
+  {% endfor %}
+</div>
+
+<br>
+<center><a href="/" style="color:white;">⬅ Back to Form</a></center>
+
+</body>
+</html>
+
+function validateForm() {
+    const fields = ['name', 'skill', 'hobby', 'goal', 'language', 'strength'];
+    for (let field of fields) {
+        const val = document.forms["myForm"][field].value.trim();
+        if (val === "") {
+            alert(field.charAt(0).toUpperCase() + field.slice(1) + " is required!");
+            return false;
+        }
+    }
+    return true;
+}
