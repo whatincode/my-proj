@@ -1,0 +1,148 @@
+const form = document.getElementById("contactForm");
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const messageInput = document.getElementById("message");
+const submitBtn = document.getElementById("submitBtn");
+const charCount = document.getElementById("charCount");
+const successMsg = document.getElementById("successMsg");
+
+// Load last submitted data from localStorage
+window.addEventListener("DOMContentLoaded", () => {
+    const data = JSON.parse(localStorage.getItem("contactData"));
+    if (data) {
+        successMsg.textContent = "Last submitted: " + data.name + " (" + data.email + ")";
+    }
+});
+
+// Real-time validation
+nameInput.addEventListener("input", validateName);
+nameInput.addEventListener("blur", validateName);
+
+emailInput.addEventListener("input", validateEmail);
+emailInput.addEventListener("blur", validateEmail);
+
+messageInput.addEventListener("input", validateMessage);
+messageInput.addEventListener("blur", validateMessage);
+
+// Character counter
+messageInput.addEventListener("input", () => {
+    charCount.textContent = messageInput.value.length + "/200";
+    checkFormValidity();
+});
+
+function validateName() {
+    const nameError = document.getElementById("nameError");
+    if (nameInput.value.trim() === "") {
+        nameError.textContent = "Name is required";
+        setFieldState(nameInput, false);
+    } else {
+        nameError.textContent = "";
+        setFieldState(nameInput, true);
+    }
+    checkFormValidity();
+}
+
+function validateEmail() {
+    const emailError = document.getElementById("emailError");
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (emailInput.value.trim() === "") {
+        emailError.textContent = "Email is required";
+        setFieldState(emailInput, false);
+    } else if (!emailPattern.test(emailInput.value)) {
+        emailError.textContent = "Invalid email format";
+        setFieldState(emailInput, false);
+    } else {
+        emailError.textContent = "";
+        setFieldState(emailInput, true);
+    }
+    checkFormValidity();
+}
+
+function validateMessage() {
+    const messageError = document.getElementById("messageError");
+    if (messageInput.value.trim() === "") {
+        messageError.textContent = "Message cannot be empty";
+        setFieldState(messageInput, false);
+    } else {
+        messageError.textContent = "";
+        setFieldState(messageInput, true);
+    }
+    checkFormValidity();
+}
+
+function setFieldState(field, isValid) {
+    if (isValid) {
+        field.classList.add("valid");
+        field.classList.remove("invalid");
+    } else {
+        field.classList.add("invalid");
+        field.classList.remove("valid");
+    }
+}
+
+function checkFormValidity() {
+    const nameOk = nameInput.value.trim() !== "";
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
+    const messageOk = messageInput.value.trim() !== "";
+    submitBtn.disabled = !(nameOk && emailOk && messageOk);
+}
+
+// Form submit
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const message = messageInput.value.trim();
+
+    // Store in localStorage
+    const formData = { name, email, message };
+    localStorage.setItem("contactData", JSON.stringify(formData));
+
+    successMsg.textContent = "Form submitted successfully!";
+    form.reset();
+
+    // Reset field styles
+    nameInput.classList.remove("valid", "invalid");
+    emailInput.classList.remove("valid", "invalid");
+    messageInput.classList.remove("valid", "invalid");
+    charCount.textContent = "0/200";
+    submitBtn.disabled = true;
+});
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Contact Form</h2>
+
+<form id="contactForm">
+
+  Name:
+  <input type="text" id="name" placeholder="Enter your name">
+  <span class="error" id="nameError"></span><br><br>
+
+  Email:
+  <input type="email" id="email" placeholder="Enter your email">
+  <span class="error" id="emailError"></span><br><br>
+
+  Message:
+  <textarea id="message" maxlength="200" placeholder="Enter your message..."></textarea>
+  <div id="charCount">0/200</div>
+  <span class="error" id="messageError"></span><br><br>
+
+  <input type="submit" value="Submit" id="submitBtn" disabled>
+</form>
+
+<p class="success" id="successMsg"></p>
+
+<script src="script.js"></script>
+
+</body>
+</html>
