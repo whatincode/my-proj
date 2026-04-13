@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>About Us</h1>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html" class="active">About</a>
+  <a href="services.html">Services</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<div class="container">
+  <div class="box">
+    <img src="https://via.placeholder.com/260x140?text=About+Us" alt="About Us" class="responsive-img">
+    <h2>About Website</h2>
+    <p>This website demonstrates responsive design using media queries.</p>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 Web Programming Lab</p>
+</footer>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Contact Us</h1>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="contact.html" class="active">Contact</a>
+</nav>
+
+<div class="container">
+  <div class="box">
+    <img src="https://via.placeholder.com/260x140?text=Contact+Us" alt="Contact Us" class="responsive-img">
+    <h2>Get in Touch</h2>
+    <p>Email: example@email.com</p>
+    <p>Phone: 9876543210</p>
+
+    <form class="contact-form">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea rows="4" placeholder="Your Message" required></textarea>
+      <input type="submit" value="Send Message">
+    </form>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 Web Programming Lab</p>
+</footer>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Responsive Website</h1>
+  <p>Home Page</p>
+</header>
+
+<nav>
+  <a href="index.html" class="active">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<div class="container">
+  <div class="box">
+    <img src="https://via.placeholder.com/260x140?text=HTML" alt="HTML" class="responsive-img">
+    <h2>HTML</h2>
+    <p>HTML provides structure to web pages.</p>
+  </div>
+  <div class="box">
+    <img src="https://via.placeholder.com/260x140?text=CSS" alt="CSS" class="responsive-img">
+    <h2>CSS</h2>
+    <p>CSS is used for styling and layout.</p>
+  </div>
+  <div class="box">
+    <img src="https://via.placeholder.com/260x140?text=Media+Queries" alt="Media Queries" class="responsive-img">
+    <h2>Media Queries</h2>
+    <p>They make websites responsive.</p>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 Web Programming Lab</p>
+</footer>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Our Services</h1>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html" class="active">Services</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<div class="container">
+  <div class="box">
+    <img src="https://via.placeholder.com/260x140?text=Web+Design" alt="Web Design" class="responsive-img">
+    <h2>Web Design</h2>
+    <p>Responsive web design services.</p>
+  </div>
+  <div class="box">
+    <img src="https://via.placeholder.com/260x140?text=Development" alt="Development" class="responsive-img">
+    <h2>Development</h2>
+    <p>HTML, CSS, and basic JavaScript development.</p>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 Web Programming Lab</p>
+</footer>
+
+</body>
+</html>
