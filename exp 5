@@ -1,0 +1,78 @@
+const loadBtn = document.getElementById("loadBtn");
+const output = document.getElementById("output");
+const genreSelect = document.getElementById("genreSelect");
+
+loadBtn.addEventListener("click", () => {
+    const selectedGenre = genreSelect.value;
+    output.innerHTML = "Loading anime data...";
+
+    let url = "https://api.jikan.moe/v4/top/anime";
+    if (selectedGenre) {
+        url = `https://api.jikan.moe/v4/anime?genres=${selectedGenre}`;
+    }
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) throw new Error("Network error");
+            return response.json();
+        })
+        .then(result => {
+            const animeList = result.data.slice(0, 10);
+
+            output.innerHTML = `<div class="container"></div>`;
+            const container = document.querySelector(".container");
+
+            animeList.forEach(anime => {
+                const card = document.createElement("div");
+                card.className = "card";
+
+                card.innerHTML = `
+                    <img src="${anime.images.jpg.image_url}" alt="${anime.title}">
+                    <h3>${anime.title}</h3>
+                    <p><strong>Rating:</strong> ${anime.score ?? "N/A"}</p>
+                    <p>${anime.synopsis ? anime.synopsis.slice(0, 100) + "..." : "No synopsis."}</p>
+                    <h6>Episodes: ${anime.episodes ?? "?"}</h6>
+                `;
+
+                container.appendChild(card);
+            });
+        })
+        .catch(error => {
+            output.innerHTML = "Failed to load anime data.";
+            console.error(error);
+        });
+});
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetch API Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Fetch API Demo</h1>
+  <p>Fetching Anime Data &amp; Images Dynamically</p>
+</header>
+
+<label for="genreSelect">Filter by Genre:</label>
+<select id="genreSelect">
+  <option value="">-- Top Anime --</option>
+  <option value="1">Action</option>
+  <option value="2">Adventure</option>
+  <option value="4">Comedy</option>
+  <option value="8">Drama</option>
+  <option value="10">Fantasy</option>
+  <option value="14">Horror</option>
+</select>
+
+<button id="loadBtn">Load Anime</button>
+
+<div id="output"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
