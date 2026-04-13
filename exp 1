@@ -1,0 +1,140 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+ <meta charset="UTF-8"> 
+ <meta name="description" content="HTML Basics Demonstration">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>HTML All Tags Demo</title> 
+</head> 
+<body bgcolor="#f0f4f8"> 
+<header align="center"> 
+ <h1>HTML Tags Demonstration</h1> 
+ <p><b>HTML</b> is used to create <i>web pages</i>.</p> </header> 
+<hr> 
+<nav align="center"> 
+ <a href="#lists">Lists</a> | 
+ <a href="#table">Table</a> | 
+ <a href="#media">Image and Link</a> | 
+ <a href="#form">Form</a> 
+</nav> 
+<hr> 
+<section id="lists"> 
+ <h2>Lists</h2> 
+ <h3>Unordered List</h3> 
+ <ul> 
+ <li>HTML</li> 
+ <li>CSS</li> 
+ <li>JavaScript</li> 
+ <li>Java</li>
+ <li>C++</li>
+ </ul>
+ <h3>Ordered List</h3> 
+ <ol> 
+ <li>Create HTML file</li> 
+ <li>Add content</li> 
+ <li>Run in browser</li> 
+ <li>Check Output</li>
+ <li>End</li>
+ </ol> 
+ <h3>Description List</h3> 
+ <dl> 
+ <dt>HTML</dt> 
+ <dd>Markup language for web pages</dd> 
+ <dt>CSS</dt>
+ <dd>CSS stands for Cascading Style Sheets</dd>
+ <dt>JS</dt>
+ <dd>Used to create dynamic and interactive content on web</dd>
+ </dl> 
+</section> 
+<hr> 
+<section id="table"> 
+ <h2>Table</h2> 
+ <table border="1" cellpadding="10" cellspacing="0" align="center" width="60%">  <caption><b>Student Information</b></caption> 
+ <tr bgcolor="#dbeafe"> 
+ <th>Roll No</th> 
+ <th>Name</th> 
+ <th>Branch</th> 
+ <th>Year</th>
+ </tr> 
+ <tr> 
+ <td align="center">1</td> 
+ <td align="center">XYZ</td> 
+ <td align="center">Computer</td> 
+ <td align="center">2024</td>
+ </tr> 
+ <tr> 
+ <td align="center">2</td> 
+ <td align="center">ABC</td> 
+ <td align="center">IT</td> 
+ <td align="center">2023</td>
+ </tr> 
+ <tr> 
+ <td align="center">3</td> 
+ <td align="center">PQR</td> 
+ <td align="center">EXTC</td> 
+ <td align="center">2025</td>
+ </tr> 
+ </table> 
+</section> 
+<hr> 
+<section id="media"> 
+ <h2>Image and Link</h2> 
+ <center> 
+ <img src="https://th.bing.com/th/id/OIP.Qmg1qVxMe3z83t2hfSO7QgHaET?w=289&h=180&c=7&r=0&o=7&dpr=1.4&pid=1.7&rm=3" 
+ alt="Sample Image" 
+ border="2"
+ hspace="10" 
+ vspace="10"> 
+ <br> 
+ <a href="https://www.w3schools.com" target="_blank">Learn HTML</a>  </center> 
+</section> 
+<hr> 
+<section id="form"> 
+ <h2>Form</h2> 
+ <form align="center"> 
+ <fieldset> 
+ <legend><b>Registration Form</b></legend> 
+ Name: 
+ <input type="text" placeholder="Enter name" required>  <br><br> 
+ Date Of Birth:
+ <input type="date" 
+ required> <br></br>
+ Phone Number:
+ <input type="tel"
+ required> <br></br>
+ Email: 
+ <input type="email" required> 
+ <br><br> 
+ Password: 
+ <input type="password"> 
+ <br><br> 
+ Gender: 
+ <input type="radio" name="gender"> Male 
+ <input type="radio" name="gender"> Female 
+ <br><br> 
+ Course: 
+ <select> 
+ <option>Computer</option> 
+ <option>IT</option> 
+ <option>AIDS</option> 
+ </select> 
+ <br><br> 
+ Skills: 
+ <input type="checkbox"> HTML
+ <input type="checkbox"> CSS 
+ <input type="checkbox"> JS 
+ <br><br> 
+ Feedback:
+ <input type="text">
+ <br></br>
+ <input type="submit" value="Register">  <input type="reset"> 
+ </fieldset> 
+ </form> 
+</section> 
+<hr> 
+<section id="Importance of HTML">
+ <h2>Importance of HTML</h2>
+ <p>HTML is a markup language that web browsers use to interpret and compose text, images, and other material into visible or audible web pages. Default characteristics for every item of HTML markup are defined in the browser, and these characteristics can be altered or enhanced by the web page designer's additional use of CSS. Many of the text elements are mentioned in the 1988 ISO technical report TR 9537 Techniques for using SGML, which describes the features of early text formatting languages such as that used by the RUNOFF command developed in the early 1960s for the CTSS (Compatible Time-Sharing System) operating system. These formatting commands were derived from the commands used by typesetters to manually format documents. However, the SGML concept of generalized markup is based on elements (nested annotated ranges with attributes) rather than merely print effects, with separate structure and markup. HTML has been progressively moved in this direction with CSS.</p>
+</section>
+<footer align="center"> 
+ <p>&copy; 2026 Web Programming Lab</p> </footer> 
+</body> 
+</html>
